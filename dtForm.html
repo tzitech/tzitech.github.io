@@ -1,0 +1,145 @@
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="bootstrap/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="http://elibrary.judiciary.gov.ph/searchforms/custom.css">
+	
+	<!-- Scripts -->
+	<!-- 
+	<script src="dtSearch_Utilities.js"></script>
+	<script src="dtSearch_WebSearchForm.js"></script>
+	-->
+	<SCRIPT SRC="http://elibrary.judiciary.gov.ph/searchforms/dtSearch_Utilities.js"></SCRIPT>
+	<SCRIPT SRC="http://elibrary.judiciary.gov.ph/searchforms/dtSearch_WebSearchForm.js"></SCRIPT>
+
+    <title>eLib on haiNa</title>
+  </head>
+  <body>
+	<div class='container-fluid'>
+		<div class="form-row">
+			<div class="col-md-12">
+				<form action="http://elibrary.judiciary.gov.ph/dtSearch/dtisapi6.dll" method="post" name="SearchForm" target="doc" class="forms">
+					<div class="form-row">
+						<div class="col-md-4">
+							<div class="form-group"><h5>
+								<label for="categories">
+									haiNa 2.0: Philippine Legal Resources
+								</label></>
+								<div class="btn-group-vertical btn-block btn-group-sm" id="categories">
+									<!-- Convert these buttons to anchor links -->
+									<button type="button" class="btn btn-primary btn-sm border-light" title="Supreme Court of the Philippines" onclick="sc()">Supreme Court</button>
+									<button type="button" class="btn btn-primary btn-sm border-light" onclick="ca()">Court of Appeals</button>
+									<button type="button" class="btn btn-primary btn-sm border-light" onclick="lawlist()">Lawyer's List</button>
+									<button type="button" class="btn btn-primary btn-sm border-light" onclick="laws()">Laws</button>
+									<button type="button" class="btn btn-primary btn-sm border-light" onclick="ei()">Executive Issuances</button>
+									<button type="button" class="btn btn-primary btn-sm border-light" onclick="other_is()">Others</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="formstyle">
+									Indexes to search:
+								</label>
+								<div id="laman">
+									<SELECT class="form-control custom-select" NAME="index" ID="formstyle" MULTIPLE size="3">
+										<option value="*{7e10028c3ae6b69b2083d1d8f39275a2} 12. SC ALL" onclick="allwords()"> A. ALL
+										<option value="*{f6df8cbf80797b096c3a33422644a21b} 1. Decisions" onclick="exact()"> B. Case Number
+										<option value="*{f6df8cbf80797b096c3a33422644a21b} 1. Decisions" SELECTED="1" onclick="allwords()"> C. SC Decision
+										<option value="*{93ddad1fd17d3809405dfad53bfb070f} 2. Resolutions" onclick="allwords()"> D. SC Resolution
+										<option value="*{f0dabe0876b58e6c44e4c5b343d545b9} 3. Admin. Matters" onclick="allwords()"> E. Admin Matters
+										<option value="*{3cb26d04e0e24df44da1674d59a85ede} 13. Bar Matters" onclick="allwords()"> F. Bar Matters
+										<option value="*{2509f05757351ffc4710c3f54a0e932a} 4. Circulars" onclick="allwords()"> G. Circulars
+										<option value="*{f07c50d9fc59397680a7be2ed4d03dea} 6. Manuals" onclick="allwords()"> H. Manuals											
+									</SELECT>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="formstyle">
+									Search Request:
+								</label>
+								<textarea class="form-control" ID="searchform" TYPE="edit" NAME="request" align="middle" style="height:80px"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="searchType">
+									Search Type:
+								</label>
+								<INPUT TYPE="hidden" NAME="cmd" VALUE="search">
+								<div id="sakto">
+								<SELECT class="form-control custom-select" NAME="searchType" SIZE="1" ID="pulldown">
+									<OPTION VALUE="allwords"> all of the words
+									<OPTION VALUE="anywords"> any of the words
+									<OPTION VALUE="phrase"> the exact phrase
+									<OPTION VALUE="bool"> boolean
+								</SELECT>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<button type="submit" class="form-control btn btn-primary btn-block mb-2" name="button" id="search" onClick="doSearch()">Click to Search</button>
+							</div>
+							<div class="form-group">
+								<label for="advanced">
+									Advanced Options:
+								</label>
+								<div class="form-check custom-control custom-checkbox">
+									<INPUT class="form-check-input custom-control-input" id="stemming" NAME="stemming" TYPE="checkbox" VALUE="Yes">
+									<label class="form-check-label custom-control-label" for="stemming">Stemming</label>
+								</div>
+								<div class="form-check custom-control custom-checkbox">
+									<INPUT class="form-check-input custom-control-input" id="fuzzy" NAME="fuzzy" TYPE="checkbox" VALUE="Yes">
+									<label class="form-check-label custom-control-label" for="fuzzy">Fuzzy searching</label>
+								</div>
+								<!-- <div class="form-check custom-control custom-checkbox">
+									<INPUT class="form-check-input custom-control-input" id="phonic" NAME="phonic" TYPE="checkbox">
+									<label class="form-check-label custom-control-label" for="phonic">Phonic searching</label>
+								</div>
+								-->
+							</div>
+							<div class="form-group">
+								<label for="sort">
+									Sort type:
+								</label>
+								<SELECT class="form-control custom-select" NAME="sort"  ID="pulldown2" MULTIPLE>
+									 <OPTION VALUE="Hits" SELECTED=1> hits
+									 <OPTION VALUE="Date"> date
+									<!--<OPTION VALUE="Name"> file name -->
+									 <!--<OPTION VALUE="Size"> size -->
+								</SELECT>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-md-12">
+					<!-- Search result config !important-->
+					<INPUT TYPE="hidden" NAME="SearchForm" VALUE="%%SearchForm%%">
+				<!--<INPUT TYPE="hidden" NAME="OrigSearchForm" VALUE="/elib/dtSearch_form.html"> -->
+					<input type="hidden" name="OrigSearchForm" value="/searchforms/dtSearch_form.html">
+					<INPUT TYPE="hidden" NAME="fuzziness" VALUE="3">
+					<!-- Limits the search result count.
+					<INPUT TYPE="hidden" NAME="autoStopLimit" VALUE="5000">-->
+					<INPUT TYPE="hidden" NAME="pageSize" VALUE="10">
+					<INPUT TYPE="hidden" NAME="autoTermWeight" VALUE="1">
+					<INPUT TYPE="hidden" NAME="fileConditions" VALUE="">
+					<INPUT TYPE="hidden" NAME="booleanConditions" VALUE="">
+				</form>
+			</div>
+		</div>
+	</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="http://elibrary.judiciary.gov.ph/searchforms/js/jquery-3.3.1.js"></script> 
+    <script src="http://elibrary.judiciary.gov.ph/searchforms/bootstrap/js/bootstrap.bundle.js"></script>
+	<script type="text/javascript" src="http://elibrary.judiciary.gov.ph/searchforms/iframeResizer.contentWindow.min.js"></script>
+  </body>
+</html>
